@@ -14,7 +14,10 @@ def xy_from_rgb(r, g, b):
     Z = red * 0.000088 + green * 0.072310 + blue * 0.986039;
 
     # calculate the xy values from the XYZ values
-    x = X / (X + Y + Z);
-    y = Y / (X + Y + Z);
+    if sum([X, Y, Z]) == 0:
+        x = y = 0
+    else:
+        x = X / (X + Y + Z);
+        y = Y / (X + Y + Z);
 
     return (x, y)

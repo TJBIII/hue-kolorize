@@ -1,7 +1,7 @@
 import colorsys
 import random 
 
-from color_converter import xy_from_rgb
+from hkolorize.color_converter import xy_from_rgb
 from phue import Bridge, PhueRegistrationException
 
 class Hue:
@@ -35,7 +35,7 @@ class Hue:
             return name_light_dict.values()
         else:
             names = light_names.split(',')
-            return [l for name, l in name_light_dict.items() if name in names]
+            return [light for name, light in name_light_dict.items() if name in names]
 
     def set_lights_xy(self, xy, brightness=254, transitiontime=10):
         """ Set all lights
@@ -46,6 +46,12 @@ class Hue:
             transitiontime (int): time for color transition in deci-seconds
         """
         for light in self.lights:
+            # handle black
+            if brightness == 0 and xy == (0,0):
+                light.brightness = 0
+                light.on = False
+                continue
+
             if not light.on:
                 light.on = True
 
@@ -66,5 +72,7 @@ class Hue:
         self.set_lights_xy(xy, int(l), 10)
 
     def set_lights_random(self):
+        """ Set all lights to a random color.
+        """
         xy = (random.random(), random.random())
         self.set_lights_xy(xy)
