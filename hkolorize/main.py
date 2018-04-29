@@ -1,3 +1,7 @@
+import io
+import time
+import picamera
+
 from hue import Hue
 from PIL import Image
 
@@ -8,16 +12,22 @@ def main():
     light_names = settings.LIGHT_NAMES
     bridge_ip = settings.BRIDGE_IP
 
-    # img = Image.open('/Users/gamewisp/Desktop/hue_test_images/trees.jpg')
-    img = Image.open('/Users/gamewisp/Desktop/hue_test_images/beach.jpg')
-    cluster_centers, dominant_color = process_img.get_colors(img, 3)
-    print(cluster_centers)
-    print(dominant_color)
-
-
     hue = Hue(bridge_ip, light_names)
-    # hue.set_lights_random()
-    hue.set_lights_rgb(dominant_color)
+
+    with picamera.PiCamera() as camera:
+        while True:
+            # create in-memory stream
+            stream = io.BytesIO()
+            camera.capture(stream, format='jpeg')
+
+            # "rewind" the stream to the beginning to read its content
+            stream.seek(0)
+            img = Image.open(stream)
+
+            _, dominant_color = process_img.get_colors(img, 3)
+            hue.set_lights_rgb(dominant_color)
+
+            time.sleep(2)
 
 if __name__ == '__main__':
     main()
