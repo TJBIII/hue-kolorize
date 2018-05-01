@@ -1,5 +1,7 @@
 from hkolorize.hue import Hue
 
+import pytest
+
 def test_hue_constructor(mocker):
     lights = [mocker.MagicMock() for _ in range(3)]
     mocker.patch('hkolorize.hue.Hue.get_lights', return_value=lights)
@@ -15,6 +17,19 @@ def test_hue_constructor(mocker):
     assert h.bridge_ip == ip_address
     assert h.bridge == 'Bridge'
     assert h.lights == lights
+
+
+def test_hue_no_bridge(mocker):
+    with pytest.raises(Exception) as e_info:
+        # Given
+        ip_address = '0.0.0.0'
+
+        # When
+        h = Hue(ip_address)
+
+        # Then
+        assert e_info == 'Press the link button on your Hue bridge and' \
+                         'then try again within 30 seconds.'
 
 
 def test_hue_set_lights_xy(mocker):

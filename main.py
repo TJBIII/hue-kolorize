@@ -2,11 +2,10 @@ import io
 import time
 import argparse
 
-from hue import Hue
+from hkolorize.hue import Hue
+from hkolorize import settings
+from hkolorize import process_img
 from PIL import Image, ImageGrab
-
-import settings
-import process_img
 
 def main(source, path=None):
     light_names = settings.LIGHT_NAMES

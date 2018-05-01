@@ -1,7 +1,7 @@
 import colorsys
 import random 
 
-from hkolorize.color_converter import xy_from_rgb
+from .color_converter import xy_from_rgb
 from phue import Bridge, PhueRegistrationException
 
 class Hue:
