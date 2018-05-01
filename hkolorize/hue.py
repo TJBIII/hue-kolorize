@@ -32,7 +32,8 @@ class Hue:
         name_light_dict = self.bridge.get_light_objects('name')
 
         if not light_names:
-            return name_light_dict.values()
+            color_types = ['Color light', 'Extended color light']
+            return [light for light in name_light_dict.values() if light.type in color_types]
         else:
             names = light_names.split(',')
             return [light for name, light in name_light_dict.items() if name in names]
