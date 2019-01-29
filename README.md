@@ -1,7 +1,7 @@
 # Hue Kolorize
 
 ### About
-Hue Kolorize allows you to set your Hue lights to a dominate color extracted from several different sources such as a Raspberry Pi camera or what is being displayed on your computer screen. Dominate colors are extracted using KMeans clustering.
+Hue Kolorize allows you to set your Hue lights to a dominant color extracted from several different sources such as a Raspberry Pi camera or what is being displayed on your computer screen. Dominant colors are extracted using KMeans clustering.
 
 ### Setup
 
@@ -27,7 +27,7 @@ Takes a screenshot in-memory using a Raspberry Pi camera and extracts the domina
 Tested with Raspberry Pi v3 Model B+ and Camera Module v2. Angle of view of the v2 camera is approximately 62 x 50 degrees.
 
 #### Source: image
-Extracts the dominate color from a JPG image. Use the `--path` argument to specify the image path.
+Extracts the dominant color from a JPG image. Use the `--path` argument to specify the image path.
 
 
 ### Tests
